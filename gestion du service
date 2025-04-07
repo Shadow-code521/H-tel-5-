@@ -1,0 +1,264 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_CHAMBRES_UN_LIT 300
+#define MAX_CHAMBRES_DEUX_LITS 200
+#define MAX_PLACES_RESTAURANT 175
+#define MAX_PLACES_PISCINE 45
+#define MAX_PLACES_SPA 20
+#define MAX_PLACES_SAUNA 20
+#define MAX_PLACES_SALLE_DE_SPORT 50
+#define MAX_PLACES_MASSAGE 10
+#define MAX_PLACES_CHAUFFEUR 5
+
+// Structure pour stocker les informations sur les reservations
+typedef struct {
+    char service[50];
+    int placesOccupees;
+    int duree; // Duree en heures
+} Reservation;
+
+// Variables globales pour la disponibilite
+int chambresUnLit = MAX_CHAMBRES_UN_LIT;
+int chambresDeuxLits = MAX_CHAMBRES_DEUX_LITS;
+int placesRestaurant = MAX_PLACES_RESTAURANT;
+int placesPiscine = MAX_PLACES_PISCINE;
+int placesSpa = MAX_PLACES_SPA;
+int placesSauna = MAX_PLACES_SAUNA;
+int placesSalleDeSport = MAX_PLACES_SALLE_DE_SPORT;
+int placesMassage = MAX_PLACES_MASSAGE;
+int placesChauffeur = MAX_PLACES_CHAUFFEUR;
+
+// Tableau pour enregistrer les reservations
+Reservation reservations[100];
+int reservationCount = 0;
+
+// Fonction pour vérifier le mot de passe
+int verifier_mdp(char *mdp, char *mdp_verif) {
+    if (strcmp(mdp, mdp_verif) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+// Fonction pour afficher les informations des reservations
+void afficherReservations() {
+    int i;
+    printf("\n--- Informations des reservations ---\n");
+    for (i = 0; i < reservationCount; i++) {
+        printf("Service: %s, Places occupees: %d, Duree: %d heures\n",
+               reservations[i].service, reservations[i].placesOccupees, reservations[i].duree);
+    }
+}
+
+// Fonction pour reserver des chambres
+void reserverChambres() {
+    int typeChambre, nombreChambres;
+    printf("Choisissez le type de chambre:\n1. Chambre a un lit\n2. Chambre a deux lits\n");
+    scanf("%d", &typeChambre);
+
+    if (typeChambre == 1) {
+        printf("Nombre de chambres a reserver (disponibles: %d): ", chambresUnLit);
+        scanf("%d", &nombreChambres);
+        if (nombreChambres <= chambresUnLit && nombreChambres > 0) {
+            chambresUnLit -= nombreChambres;
+            printf("Reservation reussie de %d chambre(s) a un lit.\n", nombreChambres);
+            // Enregistrer la reservation
+            reservations[reservationCount++] = (Reservation){"Chambre a un lit", nombreChambres, 1}; // Duree fictive
+        } else {
+            printf("Aucune chambre disponible ou nombre de chambres impossible. Chambres disponibles: %d\n", chambresUnLit);
+        }
+    } else if (typeChambre == 2) {
+        printf("Nombre de chambres a reserver (disponibles: %d): ", chambresDeuxLits);
+        scanf("%d", &nombreChambres);
+        if (nombreChambres <= chambresDeuxLits && nombreChambres > 0) {
+            chambresDeuxLits -= nombreChambres;
+            printf("Reservation reussie de %d chambre(s) a deux lits.\n", nombreChambres);
+            // Enregistrer la reservation
+            reservations[reservationCount++] = (Reservation){"Chambre a deux lits", nombreChambres, 1}; // Duree fictive
+        } else {
+            printf("Aucune chambre disponible ou nombre de chambres impossible. Chambres disponibles: %d\n", chambresDeuxLits);
+        }
+    } else {
+        printf("Choix invalide.\n");
+    }
+}
+
+// Fonction pour reserver un restaurant
+void reserverRestaurant() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesRestaurant);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesRestaurant && nombrePlaces > 0) {
+        placesRestaurant -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) au restaurant.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Restaurant", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesRestaurant);
+    }
+}
+
+// Fonction pour reserver la piscine
+void reserverPiscine() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesPiscine);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesPiscine && nombrePlaces > 0) {
+        placesPiscine -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) a la piscine.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Piscine", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesPiscine);
+    }
+}
+
+// Fonction pour reserver le spa
+void reserverSpa() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesSpa);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesSpa && nombrePlaces > 0) {
+        placesSpa -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) au spa.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Spa", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesSpa);
+    }
+}
+
+// Fonction pour reserver le sauna
+void reserverSauna() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesSauna);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesSauna && nombrePlaces > 0) {
+        placesSauna -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) au sauna.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Sauna", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesSauna);
+    }
+}
+
+// Fonction pour reserver la salle de sport
+void reserverSalleDeSport() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesSalleDeSport);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesSalleDeSport && nombrePlaces > 0) {
+        placesSalleDeSport -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) a la salle de sport.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Salle de sport", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesSalleDeSport);
+    }
+}
+
+// Fonction pour reserver un massage
+void reserverMassage() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesMassage);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesMassage && nombrePlaces > 0) {
+        placesMassage -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) pour un massage.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Massage", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesMassage);
+    }
+}
+
+// Fonction pour reserver d'un Chauffeur
+void reserverchauffeur() {
+    int nombrePlaces;
+    printf("Nombre de places a reserver (disponibles: %d): ", placesChauffeur);
+    scanf("%d", &nombrePlaces);
+    if (nombrePlaces <= placesChauffeur && nombrePlaces > 0) {
+        placesChauffeur -= nombrePlaces;
+        printf("Reservation reussie de %d place(s) pour un massage.\n", nombrePlaces);
+        // Enregistrer la reservation
+        reservations[reservationCount++] = (Reservation){"Massage", nombrePlaces, 1}; // Duree fictive
+    } else {
+        printf("Aucune place disponible ou nombre de places impossible. Places disponibles: %d\n", placesChauffeur);
+    }
+}
+// Fonction principale
+int main() {
+    int choixService, choix;
+    do {
+        printf("\n--- Menu de l'hotel CHAOS ---\n");
+        printf("1. Service de CHAOS\n");
+        printf("2. Administration\n");
+        printf("3. Quitter\n");
+        printf("Entrez votre choix: ");
+        scanf("%d", &choixService);
+
+        switch (choixService) {
+            case 1:
+                do {
+                    printf("\n--- Services disponibles ---\n");
+                    printf("1. Reservation de chambres\n");
+                    printf("2. Reservation au restaurant\n");
+                    printf("3. Reservation de la piscine\n");
+                    printf("4. Reservation du spa\n");
+                    printf("5. Reservation du sauna\n");
+                    printf("6. Reservation de la salle de sport\n");
+                    printf("7. Reservation de massage\n");
+                    printf("8. Reservation d'un Chauffeur\n");
+                    printf("9. Retour au menu principal\n");
+                    printf("Entrez votre choix: ");
+                    scanf("%d", &choix);
+
+                    switch (choix) {
+                        case 1:
+                            reserverChambres();
+                            break;
+                        case 2:
+                            reserverRestaurant();
+                            break;
+                        case 3:
+                            reserverPiscine();
+                            break;
+                        case 4:
+                            reserverSpa();
+                            break;
+                        case 5:
+                            reserverSauna();
+                            break;
+                        case 6:
+                            reserverSalleDeSport();
+                            break;
+                        case 7:
+                            reserverMassage();
+                            break;
+                        case 8:
+                            reserverchauffeur();
+                            break;
+                        case 9:
+                            printf("Retour au menu principal.\n");
+                            break;
+                        default:
+                            printf("Choix invalide. Veuillez reessayer.\n");
+                    }
+                } while (choix != 8);
+                break;
+            case 2:
+                afficherReservations();
+                break;
+            case 3:
+                printf("Merci d'avoir utilise le systeme de reservation.\n");
+                break;
+            default:
+                printf("Choix invalide. Veuillez reessayer.\n");
+        }
+    } while (choixService != 3);
+
+    return 0;
+}
